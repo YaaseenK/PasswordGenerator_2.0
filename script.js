@@ -9,11 +9,10 @@ let passwordOptions = {
   lowerCaseLetters: characterCodes.map(code => String.fromCharCode(code)),
   upperCaseLetters: characterCodes.map(code => String.fromCharCode(code).toUpperCase())
 }
-console.log(passwordOptions.lowerCaseLetters[1])
-console.log(passwordOptions.upperCaseLetters[1])
-// numbers array 
+console.log(passwordOptions.lowerCaseLetters[1]);
+console.log(passwordOptions.upperCaseLetters[1]);
 
-// symbols array
+
 
 // create an array of 26 elements and populate it with ASCII codes for the lowercase chracters
 // let characterCodes = Array.from(Array(26)).map( (_,i) => i + 97);
@@ -23,8 +22,11 @@ let lowerCaseLetters = characterCodes.map(code => String.fromCharCode(code));
 let upperCaseLetters = lowerCaseLetters.map(letter => letter.toUpperCase());
 
 function generatePassword() {
-  window.confirm('Do you want letters in your password?')
-  
+  let lengthOfPassword = window.prompt('Do you want characters in your password?');
+  if (lengthOfPassword < 8 || lengthOfPassword > 128){
+    console.log('Password must be between 8 - 128 characters in length')
+  }
+
 }
 
 // Write password to the #password input
