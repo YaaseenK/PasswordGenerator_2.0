@@ -42,17 +42,32 @@ function passwordLen(){
   }
 }
 
-function generatePassword() {
-  passwordLen();
-
+function passwordContains(){
   const containLowercase = confirm('Should the password contain lower case letters? (a-z)');
   const containCaptial =  confirm('Should the password contain captial letters? (A-Z)');
   const containNumbers = confirm('Should the password contain numbers? (0-9)'); 
-  const containSpecialChracters= confirm('Should the password contain special characters? (0-9)'); 
+  const containSpecialChracters= confirm('Should the password contain special characters? (e.g., !@#$...)?'); 
 
   console.log(containLowercase);
   console.log(containCaptial);
   console.log(containNumbers);
+  console.log(containSpecialChracters);
+
+  if (!containLowercase && !containCaptial && !containNumbers && !containSpecialChracters){
+    alert('Password must contain at least one character type.');
+  }
+  if (containLowercase) userChoice.push(passwordOptions.lowerCaseLetters);
+  if (containCaptial) userChoice.push(passwordOptions.upperCaseLetters);
+  if (containNumbers) userChoice.push(passwordOptions.numbers);
+  if (containSpecialChracters) userChoice.push(passwordOptions.symbols);
+
+  console.log(userChoice)
+}
+
+function generatePassword() {
+  passwordLen();
+
+
 
 
 }
@@ -68,10 +83,3 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-
-function getRandomInt(min, max) {
-  // return result to which ever function calls getRandomInt function;
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
-console.log(getRandomInt(10, 11))
