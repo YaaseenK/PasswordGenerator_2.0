@@ -77,6 +77,42 @@ function shuffle(userChoice){
   console.log(userChoice);
 }
 
+
+/**
+ * secureInt(maxExclusive)
+ * Returns a uniformly distributed random integer between 0 (inclusive)
+ * and maxExclusive (exclusive).
+ * Uses Web Crypto API for secure randomness when available,
+ * otherwise falls back to Math.random().
+ */
+function secureInt(maxExclusive) {
+  // If the environment provides the Web Crypto API (modern browsers, Deno, etc.)
+    if (typeof crypto !== "undefined" && crypto.getRandomValues) {
+    // Compute an upper limit multiple of maxExclusive to avoid modulo bias.
+    // 0x100000000 = 2^32 = 4,294,967,296, the range of a 32-bit unsigned integer.
+    const limit = Math.floor(0x100000000 / maxExclusive) * maxExclusive;
+
+    // Create a 1-element typed array to hold a 32-bit unsigned random value.
+    const buf = new Uint32Array(1);
+
+    let x;
+    do {
+      // Fill buf[0] with a random 32-bit unsigned integer.
+        crypto.getRandomValues(buf);
+        x = buf[0];
+      // Repeat if the number is outside the limit range (to remove bias).
+    } while (x >= limit);
+
+    // Map the random 32-bit number into the desired range [0, maxExclusive).
+    return x % maxExclusive;
+    }
+
+  // Fallback if crypto is unavailable (e.g., some Node versions or old browsers)
+  // Note: Math.random() is NOT cryptographically secure, but okay as a backup.
+  return Math.floor(Math.random() * maxExclusive);
+}
+
+
 function generatePassword() {
   passwordLen();
 }
