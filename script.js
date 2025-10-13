@@ -1,6 +1,8 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 const characterCodes = Array.from(Array(26)).map( (_,i) => i + 97);
+let passwordlength;
+let userChoice = [];
 
 let passwordOptions = { 
   numbers: [0,1,2,3,4,5,6,7,8,9],
@@ -21,13 +23,30 @@ let lowerCaseLetters = characterCodes.map(code => String.fromCharCode(code));
 // convert lowercase letters to uppercase letters
 let upperCaseLetters = lowerCaseLetters.map(letter => letter.toUpperCase());
 
-function generatePassword() {
-  let lengthOfPassword = window.prompt('Do you want characters in your password?');
-  if (lengthOfPassword < 8 || lengthOfPassword > 128){
-    console.log('Password must be between 8 - 128 characters in length')
+// Get password len:
+function passwordLen(){
+  let length = null;
+  while(true){
+    const input = prompt('Enter password length (8-128):')
+    if (input === null) {
+      alert("Canceled. No password generated.");
+      location.reload();
+      return '';
+    }
+    const n = Number(input.trim());
+    if (Number.isInteger(n) && n >= 8 && n <= 128) {
+      length = n;
+      break;
+    }
+    alert('Please enter a whole number between 8 and 128.');
   }
+}
+
+function generatePassword() {
+  passwordLen()
 
 }
+
 
 // Write password to the #password input
 function writePassword() {
