@@ -58,7 +58,7 @@ function passwordContains(){
 
 function generatePassword() {
   passwordLen();
-
+  passwordContains();
   /* 
     Fisher-Yates shuffle using cryptographically secure random numbers.
     Randomly rearranges elements of an array in place so every premutation is equally likely.
@@ -66,11 +66,18 @@ function generatePassword() {
   shuffle(userChoice)
 
   function shuffle(userChoice){
+    // start at the end of the array and swap each element with a random earlier element.
     for (let i = userChoice.length - 1; i > 0; i--){
-      // 
+      // Get a secure random integer j where 0 < j <  i 
+      // (i + 1) ensures the upper bound is exclusive  since secureInt returns [0, maxExclusive]
       const j = secureInt(i + 1);
 
+      // swap arr[i] with arr[j], using destructuring assigment.
+      [userChoice[i], userChoice[j]] = [userChoice[j], userChoice[i]];
+      // print which random index was chosen (for debuggiing / illustation)
+      console.log('Swapped index', i, 'with', j);
     }
+    return userChoice;
   }
 
 
