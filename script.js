@@ -43,8 +43,14 @@ function passwordLen(){
 }
 
 function generatePassword() {
-  passwordLen()
+  passwordLen();
 
+  let containLowercase;
+  let containCaptial;
+  confirm('Should the password contain lower case letters? (a-z)');
+  console.log(containLowercase);
+  confirm('Should the password contain captial letters? (A-Z)');
+  confirm('Should the password contain numbers? (0-9)');
 }
 
 
