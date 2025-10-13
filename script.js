@@ -25,10 +25,12 @@ function passwordLen(){
     const n = Number(input.trim());
     if (Number.isInteger(n) && n >= 8 && n <= 128) {
       length = n;
+      passwordContains();
       break;
     }
     alert('Please enter a whole number between 8 and 128.');
   }
+  
 }
 
 function passwordContains(){
@@ -53,9 +55,24 @@ function passwordContains(){
   console.log(userChoice)
 }
 
+
 function generatePassword() {
   passwordLen();
-  passwordContains();
+
+  /* 
+    Fisher-Yates shuffle using cryptographically secure random numbers.
+    Randomly rearranges elements of an array in place so every premutation is equally likely.
+  */
+  shuffle(userChoice)
+
+  function shuffle(userChoice){
+    for (let i = userChoice.length - 1; i > 0; i--){
+      // 
+      const j = secureInt(i + 1);
+
+    }
+  }
+
 
 }
 
