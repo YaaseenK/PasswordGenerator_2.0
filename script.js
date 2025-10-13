@@ -11,17 +11,6 @@ let passwordOptions = {
   lowerCaseLetters: characterCodes.map(code => String.fromCharCode(code)),
   upperCaseLetters: characterCodes.map(code => String.fromCharCode(code).toUpperCase())
 }
-console.log(passwordOptions.lowerCaseLetters[1]);
-console.log(passwordOptions.upperCaseLetters[1]);
-
-
-
-// create an array of 26 elements and populate it with ASCII codes for the lowercase chracters
-// let characterCodes = Array.from(Array(26)).map( (_,i) => i + 97);
-// convert the ASCII codes to actual letters
-let lowerCaseLetters = characterCodes.map(code => String.fromCharCode(code));
-// convert lowercase letters to uppercase letters
-let upperCaseLetters = lowerCaseLetters.map(letter => letter.toUpperCase());
 
 // Get password len:
 function passwordLen(){
@@ -56,19 +45,17 @@ function passwordContains(){
   if (!containLowercase && !containCaptial && !containNumbers && !containSpecialChracters){
     alert('Password must contain at least one character type.');
   }
-  if (containLowercase) userChoice.push(passwordOptions.lowerCaseLetters);
-  if (containCaptial) userChoice.push(passwordOptions.upperCaseLetters);
-  if (containNumbers) userChoice.push(passwordOptions.numbers);
-  if (containSpecialChracters) userChoice.push(passwordOptions.symbols);
+  if (containLowercase) userChoice.push(...Object.values(passwordOptions.lowerCaseLetters));
+  if (containCaptial) userChoice.push(...Object.values(passwordOptions.upperCaseLetters));
+  if (containNumbers) userChoice.push(...Object.values(passwordOptions.numbers));
+  if (containSpecialChracters) userChoice.push(...Object.values(passwordOptions.symbols));
 
   console.log(userChoice)
 }
 
 function generatePassword() {
   passwordLen();
-
-
-
+  passwordContains();
 
 }
 
