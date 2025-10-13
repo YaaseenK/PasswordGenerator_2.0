@@ -25,10 +25,12 @@ function passwordLen(){
     const n = Number(input.trim());
     if (Number.isInteger(n) && n >= 8 && n <= 128) {
       length = n;
+      passwordContains();
       break;
     }
     alert('Please enter a whole number between 8 and 128.');
   }
+  
 }
 
 function passwordContains(){
@@ -51,12 +53,68 @@ function passwordContains(){
   if (containSpecialChracters) userChoice.push(...Object.values(passwordOptions.symbols));
 
   console.log(userChoice)
+
+  shuffle(userChoice)
 }
+  
+/* 
+    Fisher-Yates shuffle using cryptographically secure random numbers.
+    Randomly rearranges elements of an array in place so every premutation is equally likely.
+  */
+
+function shuffle(userChoice){
+  // start at the end of the array and swap each element with a random earlier element.
+  for (let i = userChoice.length - 1; i > 0; i--){
+    // Get a secure random integer j where 0 < j <  i 
+    // (i + 1) ensures the upper bound is exclusive  since secureInt returns [0, maxExclusive]
+    const j = secureInt(i + 1);
+
+    // swap arr[i] with arr[j], using destructuring assigment.
+    [userChoice[i], userChoice[j]] = [userChoice[j], userChoice[i]];
+    // print which random index was chosen (for debuggiing / illustation)
+    console.log('Swapped index', i, 'with', j);
+  }
+  console.log(userChoice);
+}
+
+
+/**
+ * secureInt(maxExclusive)
+ * Returns a uniformly distributed random integer between 0 (inclusive)
+ * and maxExclusive (exclusive).
+ * Uses Web Crypto API for secure randomness when available,
+ * otherwise falls back to Math.random().
+ */
+function secureInt(maxExclusive) {
+  // If the environment provides the Web Crypto API (modern browsers, Deno, etc.)
+    if (typeof crypto !== "undefined" && crypto.getRandomValues) {
+    // Compute an upper limit multiple of maxExclusive to avoid modulo bias.
+    // 0x100000000 = 2^32 = 4,294,967,296, the range of a 32-bit unsigned integer.
+    const limit = Math.floor(0x100000000 / maxExclusive) * maxExclusive;
+
+    // Create a 1-element typed array to hold a 32-bit unsigned random value.
+    const buf = new Uint32Array(1);
+
+    let x;
+    do {
+      // Fill buf[0] with a random 32-bit unsigned integer.
+        crypto.getRandomValues(buf);
+        x = buf[0];
+      // Repeat if the number is outside the limit range (to remove bias).
+    } while (x >= limit);
+
+    // Map the random 32-bit number into the desired range [0, maxExclusive).
+    return x % maxExclusive;
+    }
+
+  // Fallback if crypto is unavailable (e.g., some Node versions or old browsers)
+  // Note: Math.random() is NOT cryptographically secure, but okay as a backup.
+  return Math.floor(Math.random() * maxExclusive);
+}
+
 
 function generatePassword() {
   passwordLen();
-  passwordContains();
-
 }
 
 
