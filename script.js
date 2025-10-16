@@ -124,13 +124,13 @@ function generatePassword() {
   // seed one from each chosen type 
   for (const p of pools) result.push(pick(p));
 
-  console.log(result)
+  // fill the rest from the combined pool
+  const all = pools.flat()
+  while (result.length < length){
+    result.push(pick(all));
+  }
 
-
-
-  shuffle(userChoice)
-
-
+  return shuffle(result).join('')
   
 }
 
