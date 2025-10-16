@@ -1,9 +1,6 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 const characterCodes = Array.from(Array(26)).map( (_,i) => i + 97);
-let passwordlength;
-let userChoice = [];
-let passwordFinal = [];
 
 let passwordOptions = { 
   numbers: [0,1,2,3,4,5,6,7,8,9],
@@ -30,6 +27,7 @@ function shuffle(userChoice){
     // print which random index was chosen (for debuggiing / illustation)
     // console.log('Swapped index', i, 'with', j);
   }
+  return userChoice;
   // console.log(userChoice);
 }
 
@@ -68,6 +66,11 @@ function secureInt(maxExclusive) {
   return Math.floor(Math.random() * maxExclusive);
 }
 
+/* helper function to pick one element from an array*/
+function pick(arr){
+  return arr[secureInt(arr.length)];
+}
+
 
 function generatePassword() {
   let length = null;
@@ -85,26 +88,49 @@ function generatePassword() {
     }
     alert('Please enter a whole number between 8 and 128.');
   }
-
+  
+  // 2) Criteria  
+  let userChoice = [];
   const containLowercase = confirm('Should the password contain lower case letters? (a-z)');
   const containCaptial =  confirm('Should the password contain captial letters? (A-Z)');
   const containNumbers = confirm('Should the password contain numbers? (0-9)'); 
   const containSpecialChracters= confirm('Should the password contain special characters? (e.g., !@#$...)?'); 
 
-  console.log(containLowercase);
-  console.log(containCaptial);
-  console.log(containNumbers);
-  console.log(containSpecialChracters);
+  // console.log(containLowercase);
+  // console.log(containCaptial);
+  // console.log(containNumbers);
+  // console.log(containSpecialChracters);
+
+  // 3) Build selected pools
+
+  const pools = [];
 
   if (!containLowercase && !containCaptial && !containNumbers && !containSpecialChracters){
-    alert('Password must contain at least one character type.');
+    alert('Password must contain at least one character type. Try again');
+    location.reload();
+    return '';
   }
-  if (containLowercase) userChoice.push(...Object.values(passwordOptions.lowerCaseLetters));
-  if (containCaptial) userChoice.push(...Object.values(passwordOptions.upperCaseLetters));
-  if (containNumbers) userChoice.push(...Object.values(passwordOptions.numbers));
-  if (containSpecialChracters) userChoice.push(...Object.values(passwordOptions.symbols));
+  if (containLowercase) pools.push(passwordOptions.lowerCaseLetters);
+  if (containCaptial) pools.push(passwordOptions.upperCaseLetters);
+  if (containNumbers) pools.push(passwordOptions.numbers);
+  if (containSpecialChracters) pools.push(passwordOptions.symbols);
+  console.log(pools)
+  
+
+// 4) Build the password: ensure at least one from each, then fill rest
+
+  const result = [];
+  
+  // seed one from each chosen type 
+  for (const p of pools) result.push(pick(p));
+
+  console.log(result)
+
+
 
   shuffle(userChoice)
+
+
   
 }
 
