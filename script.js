@@ -81,7 +81,6 @@ function generatePassword() {
     const n = Number(input.trim());
     if (Number.isInteger(n) && n >= 8 && n <= 128) {
       length = n;
-      passwordContains();
       break;
     }
     alert('Please enter a whole number between 8 and 128.');
