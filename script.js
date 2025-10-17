@@ -5,7 +5,6 @@ const characterCodes = Array.from(Array(26)).map( (_,i) => i + 97);
 let passwordOptions = { 
   numbers: [0,1,2,3,4,5,6,7,8,9],
   symbols: ['!', '@', '#', '$', '^', '&', '*', '”' , '%', "'", '(', ')' , '+', '-' , '.', '/', ':', ';' , '<' , '=' , '>' , '?' , '~' ],
-
   lowerCaseLetters: characterCodes.map(code => String.fromCharCode(code)),
   upperCaseLetters: characterCodes.map(code => String.fromCharCode(code).toUpperCase())
 }
@@ -28,9 +27,7 @@ function shuffle(userChoice){
     // console.log('Swapped index', i, 'with', j);
   }
   return userChoice;
-  // console.log(userChoice);
 }
-
 
 /**
  * secureInt(maxExclusive)
@@ -89,8 +86,7 @@ function generatePassword() {
     alert('Please enter a whole number between 8 and 128.');
   }
   
-  // 2) Criteria  
-  let userChoice = [];
+  // 2) Criteria 
   const containLowercase = confirm('Should the password contain lower case letters? (a-z)');
   const containCaptial =  confirm('Should the password contain captial letters? (A-Z)');
   const containNumbers = confirm('Should the password contain numbers? (0-9)'); 
@@ -114,8 +110,6 @@ function generatePassword() {
   if (containCaptial) pools.push(passwordOptions.upperCaseLetters);
   if (containNumbers) pools.push(passwordOptions.numbers);
   if (containSpecialChracters) pools.push(passwordOptions.symbols);
-  console.log(pools)
-  
 
 // 4) Build the password: ensure at least one from each, then fill rest
 
