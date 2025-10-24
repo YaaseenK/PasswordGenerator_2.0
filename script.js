@@ -37,7 +37,7 @@ function shuffle(userChoice){
  * otherwise falls back to Math.random().
  */
 function secureInt(maxExclusive) {
-  // If the environment provides the Web Crypto API (modern browsers, Deno, etc.)
+  // If the environment provides the Web Crypto API (modern browsers, Deno, et.)
     if (typeof crypto !== "undefined" && crypto.getRandomValues) {
     // Compute an upper limit multiple of maxExclusive to avoid modulo bias.
     // 0x100000000 = 2^32 = 4,294,967,296, the range of a 32-bit unsigned integer.
@@ -104,12 +104,14 @@ function generatePassword() {
   if (!containLowercase && !containCaptial && !containNumbers && !containSpecialChracters){
     alert('Password must contain at least one character type. Try again');
     location.reload();
-    return '';
+    return ''; 
   }
   if (containLowercase) pools.push(passwordOptions.lowerCaseLetters);
   if (containCaptial) pools.push(passwordOptions.upperCaseLetters);
   if (containNumbers) pools.push(passwordOptions.numbers);
   if (containSpecialChracters) pools.push(passwordOptions.symbols);
+
+  // console.log(pools);
 
 // 4) Build the password: ensure at least one from each, then fill rest
 
@@ -127,7 +129,6 @@ function generatePassword() {
   return shuffle(result).join('')
   
 }
-
 
 // Write password to the #password input
 function writePassword() {
